@@ -1,16 +1,25 @@
 public class Polynomial {
   double[] coefficients;
+  double[] exponents;
   
   public Polynomial() {
     this.coefficients = new double[1];
     this.coefficients[0] = 0;
+
+    this.exponents = new double[1];
+    this.exponents[0] = 0;
   }
 
-  public Polynomial(double[] coefficients) {
+  public Polynomial(double[] coefficients, double[] exponents) {
     this.coefficients = new double[coefficients.length];
+    this.exponents = new double[exponents.length];
 
     for (int i = 0; i < coefficients.length; i++) {
       this.coefficients[i] = coefficients[i];
+    }
+
+    for (int i = 0; i < exponents.length; i++) {
+      this.exponents[i] = exponents[i];
     }
   }
 
