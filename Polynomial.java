@@ -1,5 +1,9 @@
-import java.util.*;
-import java.io.*;
+import java.io.File;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.FileNotFoundException;
 
 public class Polynomial {
   double[] coefficients;
@@ -33,7 +37,7 @@ public class Polynomial {
     String exprWithPlus = "";
 
     for (int i = 0; i < line.length(); i++) {
-      if (line.charAt(i) == '-') 
+      if (line.charAt(i) == '-' && i != 0) 
         exprWithPlus += "+-";
       else
         exprWithPlus += String.valueOf(line.charAt(i));
@@ -57,8 +61,6 @@ public class Polynomial {
     }
 
 
-    System.out.println(Arrays.toString(this.coefficients));
-    System.out.println(Arrays.toString(this.exponents));
   }
 
   public Polynomial add(Polynomial p2) {
@@ -157,7 +159,7 @@ public class Polynomial {
     return new Polynomial(actualCoeff, actualExp);
   }
 
-  public void saveToFile(String filename) throws Exception {
+  public void saveToFile(String filename) throws IOException {
     // first we need to parse the polynomial
     
     int len = this.coefficients.length;
@@ -192,7 +194,6 @@ public class Polynomial {
     writer.write(resultExpression);
     writer.close();
 
-    System.out.println(resultExpression);
 
   }
 

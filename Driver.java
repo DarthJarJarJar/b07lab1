@@ -1,5 +1,6 @@
 import java.util.*;
 import java.io.*;
+
 public class Driver {
   public static void main(String[] args) {
     double[] c1 = {1, 1};
@@ -10,27 +11,25 @@ public class Driver {
     Polynomial p2 = new Polynomial(c2, e2);
 
     Polynomial s = p1.multiply(p2);
-    System.out.println(Arrays.toString(s.exponents));
-    System.out.println(Arrays.toString(s.coefficients));
 
     try {
       s.saveToFile("abc1.txt");
       p1.saveToFile("abc2.txt");
       p2.saveToFile("abc3.txt");
     } catch (Exception e) {
-      System.out.println("An error occreed");
+      System.out.println(e.getMessage());
     }
 
     double a = s.evaluate(2);
     System.out.println(a);
 
     File file = new File("poly.txt");
-    System.out.println(file.getAbsolutePath());
     try {
       Polynomial p3 = new Polynomial(file);
+      System.out.println("Exponents: " + Arrays.toString(p3.exponents));
+      System.out.println("Coeff: " + Arrays.toString(p3.coefficients));
     } catch (Exception e) {
-      // TODO: handle exception
-      System.out.println(e.getMessage());
+      System.out.println(e.getMessage() + "dubey");
     }
 
   }
