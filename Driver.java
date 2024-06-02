@@ -11,11 +11,13 @@ public class Driver {
     Polynomial p2 = new Polynomial(c2, e2);
 
     Polynomial s = p1.multiply(p2);
+    Polynomial d = new Polynomial();
 
     try {
       s.saveToFile("abc1.txt");
       p1.saveToFile("abc2.txt");
-      p2.saveToFile("abc3.txt");
+      p2.saveToFile("../polynomial.txt");
+      d.saveToFile("../dubey.txt");
     } catch (Exception e) {
       System.out.println(e.getMessage());
     }
@@ -24,10 +26,18 @@ public class Driver {
     System.out.println(a);
 
     File file = new File("poly.txt");
+    File file2 = new File("empty.txt");
     try {
       Polynomial p3 = new Polynomial(file);
       System.out.println("Exponents: " + Arrays.toString(p3.exponents));
       System.out.println("Coeff: " + Arrays.toString(p3.coefficients));
+
+      Polynomial empty = new Polynomial(file2);
+      if (Polynomial.isZeroPolynomial(empty)) System.out.println("zero polynomial is working");
+      if (Polynomial.isZeroPolynomial(empty.add(empty))) System.out.println("zero polynomial is working");
+      if (Polynomial.isZeroPolynomial(empty.multiply(p3))) System.out.println("zero polynomial is working");
+      if (empty.hasRoot(15) == true) System.out.println("zero polynomial is working");
+      if (empty.evaluate(15) == 0) System.out.println("zero polynomial is working");
     } catch (Exception e) {
       System.out.println(e.getMessage() + "dubey");
     }

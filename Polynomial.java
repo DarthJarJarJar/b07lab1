@@ -10,11 +10,19 @@ public class Polynomial {
   int[] exponents;
   
   public Polynomial() {
-    this.coefficients = new double[0];
-    this.exponents = new int[0];
+    //this.coefficients = new double[0];
+    //this.exponents = new int[0];
+    this.coefficients = null;
+    this.exponents = null;
   }
 
   public Polynomial(double[] coefficients, int[] exponents) {
+    if (coefficients.length != exponents.length) {
+      System.out.println("The lengths of coefficients and exponents must be the same");
+      System.out.println("Setting coefficients and exponents to null...");
+      return;
+    }
+
     this.coefficients = new double[coefficients.length];
     this.exponents = new int[exponents.length];
 
@@ -33,6 +41,12 @@ public class Polynomial {
     String line = input.readLine();
 
     input.close();
+
+    if (line.equals("0")) {
+      this.exponents = null;
+      this.coefficients = null;
+      return;
+    }
     
     String exprWithPlus = "";
 
@@ -64,6 +78,20 @@ public class Polynomial {
   }
 
   public Polynomial add(Polynomial p2) {
+    if (isZeroPolynomial(this) || isZeroPolynomial(p2)) {
+      return new Polynomial();
+    }
+
+    if (isZeroPolynomial(this)) {
+      return new Polynomial(p2.coefficients, p2.exponents);
+    }
+
+    if (isZeroPolynomial(p2)) {
+      return new Polynomial(this.coefficients, this.exponents);
+    }
+
+    // both are non zero
+
     int sum_length = this.exponents.length;
 
     for (int i = 0; i < p2.exponents.length; i++) {
@@ -126,6 +154,10 @@ public class Polynomial {
   }
 
   public Polynomial multiply(Polynomial p2) {
+    if (isZeroPolynomial(this) || isZeroPolynomial(p2)) {
+      return new Polynomial();
+    }
+
     int[] tempExponents = new int[this.exponents.length * p2.exponents.length];
     double[] tempCoeff = new double[this.exponents.length * p2.exponents.length];
     int counter = 0;
@@ -161,7 +193,18 @@ public class Polynomial {
 
   public void saveToFile(String filename) throws IOException {
     // first we need to parse the polynomial
-    
+    if (isZeroPolynomial(this)) {
+      FileWriter writer = new FileWriter(filename);
+      writer.write("0");
+      writer.close();
+      return;
+    }
+
+    if (this.coefficients == null || this.exponents == null) {
+      System.out.println("Invalid polynomial");
+      return;
+    }
+
     int len = this.coefficients.length;
     String resultExpression = "";
 
@@ -200,6 +243,7 @@ public class Polynomial {
 
   public double evaluate(double x) {
     double answer = 0.0;
+    if (isZeroPolynomial(this)) return answer;
 
     for (int i = 0; i < this.coefficients.length; i++) {
       answer += this.coefficients[i] * Math.pow(x, this.exponents[i]);
@@ -209,6 +253,7 @@ public class Polynomial {
   }
 
   public boolean hasRoot(double x) {
+    if (isZeroPolynomial(this)) return true;
     double answer = this.evaluate(x);
     return answer == 0;
   }
@@ -229,5 +274,7 @@ public class Polynomial {
     return -1;
   }
 
-
+  public static boolean isZeroPolynomial(Polynomial p) {
+    return p.coefficients == null && p.exponents == null;
+  } 
 }
