@@ -10,8 +10,6 @@ public class Polynomial {
   int[] exponents;
   
   public Polynomial() {
-    //this.coefficients = new double[0];
-    //this.exponents = new int[0];
     this.coefficients = null;
     this.exponents = null;
   }
@@ -20,6 +18,8 @@ public class Polynomial {
     if (coefficients.length != exponents.length) {
       System.out.println("The lengths of coefficients and exponents must be the same");
       System.out.println("Setting coefficients and exponents to null...");
+      this.coefficients = null;
+      this.exponents = null;
       return;
     }
 
