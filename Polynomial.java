@@ -138,6 +138,8 @@ public class Polynomial {
       }
     }
 
+    if (countNonZero == 0) return new Polynomial();
+
     double[] nonZeroAddedCoeff = new double[countNonZero];
     int[] nonZeroAddedExp = new int[countNonZero];
 
